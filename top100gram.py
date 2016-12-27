@@ -1,13 +1,8 @@
 #! python 3
 #this app scrapes an instagram tracking site for the top 100 accounts
 
-import requests, os, SelenaBot
+import requests, os
 from bs4 import BeautifulSoup
-
-if os.path.exists('.\\top100pictures') == False:
-    os.makedirs('.\\top100pictures') #makes folder to save files in
-
-os.chdir('.\\top100pictures')
 
 r = requests.get('https://socialblade.com/instagram/top/100/followers') #access instagram tracking site
 soup = BeautifulSoup(r.text, "html.parser")
@@ -23,7 +18,13 @@ if 'justinbieber' in top100:    #Cleans up "Justin Bieber bug"
     top100.remove('justinbieber') 
     top100.append('justnbieber')
 
+'''
+if os.path.exists('.\\top100pictures') == False:
+    os.makedirs('.\\top100pictures') #makes folder to save files in
 
-for account in top100:
+os.chdir('.\\top100pictures')
+
+for accounts in top100:
 	print('accessing '+account+'\'s Instagram')
 	SelenaBot.SelenaBot(account)
+	'''
