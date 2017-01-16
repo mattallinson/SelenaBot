@@ -12,7 +12,7 @@ In this version, it only downloads pictures taken on the day before the program 
 
 import requests, json, webbrowser, os
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 from top100gram import top100
 
 instagram = 'http://www.instagram.com/' 
