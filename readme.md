@@ -8,19 +8,19 @@ SelenaBot is an script that uses BeautifulSoup and JSON to scrape instagram acco
 ##the allPics list
 After crawling the page for the desired account, SelenaBot creates a list called allPics that contains 12 dictionaries, with each dictionary containing the following keys:
 
-*comments_disabled
-*video_views
-*thumbnail_src
-*likes
-*code
-*date
-*id
-*caption
-*display_src
-*is_video
-*dimensions
-*comments
-*owner
+* comments_disabled
+* video_views
+* thumbnail_src
+* likes
+* code
+* date
+* id
+* caption
+* display_src
+* is_video
+* dimensions
+* comments
+* owner
 
 These keys are fairly self explanatory. *Date* returns a unix timestamp, *display_src* & *thumbnail_src* return .jpg URLs of large and small versions of the image in question. *Likes* & *Video_Views* return integers of the respective image metrics. Important to note is these dictionary keys don't exist for images where they're irrelevant. E.g. if a picture doesn't have a caption, then the images dictionary wont have the *caption* key. 
 
