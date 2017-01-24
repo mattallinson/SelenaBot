@@ -1,1 +1,0 @@
-@py.exe C:\Users\maa16\SelenaBot\Selenabot.py %*
