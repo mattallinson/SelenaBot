@@ -1,4 +1,4 @@
-#! python 3
+#! /env/bin/python3
 '''
 this app scrapes an instagram tracking site for the top 100 accounts
 '''
@@ -20,6 +20,6 @@ if 'justinbieber' in top100:    #Cleans up "Justin Bieber bug"
     top100.remove('justinbieber') 
     top100.append('justnbieber')
 
-t100file = open('top100.txt','w')
+t100file = open(os.path.join(Archive,'top100.txt'),'w')
 t100file.write(str(top100))  
 t100file.close()
