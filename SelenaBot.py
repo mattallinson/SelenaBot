@@ -47,11 +47,12 @@ def SelenaBot(account):
                     picFile.write(chunk)
 
                 picFile.close()
-                
+                #if the picture has a caption, adds it to the "captions" list
                 if 'caption' in picture.keys():
                     print('\tcopying caption for picture '+DateStamp(picture['date']))
                     captions.append(picture['caption'])
     
+    #saves the captions list to a text file. 
     captionFile = open(os.path.join(captionFilepath, yesterday +'_captions.txt'),'w')
     captionFile.write(str(captions))
     captionFile.close() 
@@ -61,15 +62,15 @@ for account in top100:
     SelenaBot(account)
 
 
-
+#Pulls out the emojis from all the captions and counts them
 captionsString =''.join(captions)
 char = []
 for c in captionsString:
     if c in emoji:
         char.append(c)
         
-pprint.pprint(collections.Counter(char))
-
+pprint.pprint(collections.Counter(char)) #outputs the count in the terminal
+#saves the count in a text file
 emojiFile= open(os.path.join(emojiFilepath, yesterday +'_emoji.txt'),'w')
 emojiFile.write(pprint.pformat(collections.Counter(char)))
 emojiFile.close()
