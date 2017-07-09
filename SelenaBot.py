@@ -5,6 +5,7 @@ BeautifulSoup Instagram Scraper that gets all pictures posted by celebrities yes
 '''
 
 import requests, json, os, pprint, sys, tweepy
+import colourpicker
 from collections import Counter
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
@@ -101,13 +102,19 @@ def emojiCounter():
 
     
 def main():
+    print('downloading pictures:')
     for account in top100:
-        print('Pictures from today on '+account+'\'s Instagram')
+        print(str(top100.index(account)+1) +'/ Pictures from today on '+account+'\'s Instagram')
         picDownloader(account)
+    print('finding dominant colour')
+    colourpicker.colourpicker(pictureFolder)
 
-    api = make_twitter_api()
-    for i, j in emojiCounter():
-        api.update_status('The most popular emoji on Instagram yesterday was: '+ i +' which was used ' +str(j)+' times')
+    if len(sys.argv[1]) > 2:
+        api = make_twitter_api()
+        for i, j in emojiCounter():
+            api.update_status('The most popular emoji on Instagram yesterday was: '+ i +' which was used ' +str(j)+' times')
+    else:
+        print('no twitter password entered, terminating without tweeting')
 
 
 if __name__ == '__main__':
