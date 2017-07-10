@@ -26,7 +26,7 @@ def palette_printer(palette): #saves a 4x4 grid of the 4 colours from a palette 
 
 def palette_maker(directory): #uses ColorThief to make a Palette of the 4 most dominant colours in the images provided to it, saves them in the palette folder
 	palette_folder = palette_folder_maker(directory)
-	images = [i for i in os.listdir(directory) if os.path.isfile(os.path.join(directory,i)) and i.endswith(".jpg")]
+	images = [os.path.join(directory,i) for i in os.listdir(directory) if os.path.isfile(os.path.join(directory,i)) and i.endswith(".jpg")]
 	for c,i in enumerate(images,1):
 		print(c, 'of', len(images),'getting dominant colors for',i)
 		iColors =ColorThief(i).get_palette(4) #creates a list of 4 tuples containing the RBG values of the 4 most dominant colours, see ColorThief docs for more info
