@@ -103,8 +103,8 @@ def emojiCounter():
     
 def main():
     print('downloading pictures:')
-    for account in top100:
-        print(str(top100.index(account)+1) +'/ Pictures from today on '+account+'\'s Instagram')
+    for c, account in enumerate(top100,1):
+        print(c,'Pictures from today on '+account+'\'s Instagram')
         picDownloader(account)
     print('finding dominant colour')
     colourpicker.colourpicker(pictureFolder)
