@@ -25,15 +25,15 @@ for p in [pictureFolder, captionFolder, emojiFolder]: #makes the prequiste folde
     if os.path.exists(p) == False:
         os.makedirs(p) 
 
-def make_twitter_api():
+def make_twitter_api(profile):
     AUTH_FILE = sys.argv[1]
     with open(AUTH_FILE, "r") as auth_file:
         auth_data = json.load(auth_file)
 
-    auth = tweepy.OAuthHandler(auth_data["consumer_key"],
-                               auth_data["consumer_secret"])
-    auth.set_access_token(auth_data["access_token"],
-                          auth_data["access_secret"])
+    profile_auth_data = auth_data[profile]
+
+    auth = tweepy.OAuthHandler(profile_auth_data["consumer_key"],profile_auth_data["consumer_secret"])
+    auth.set_access_token(profile_auth_data["access_token"],profile_auth_data["access_secret"])
 
     return tweepy.API(auth)
 
@@ -110,9 +110,14 @@ def main():
     colourpicker.colourpicker(pictureFolder)
 
     if len(sys.argv[1]) > 2:
-        api = make_twitter_api()
+        api = make_twitter_api('InstaTopEmoji') #updates InstaTopEmoji twitterbot
         for i, j in emojiCounter():
-            api.update_status('The most popular emoji on Instagram yesterday was: '+ i +' which was used ' +str(j)+' times')
+            api.update_status('The most popular emoji on Celebrity Instagram yesterday was: '+ i +' which was used ' +str(j)+' times')
+
+        api = make_twitter_api('instaverage') #updates instaverage twitterbot
+        tweetpic = os.path.join(pictureFolder,'1-pallete-of-day.jpg')
+        api.update_with_media(tweetpic, status='the dominant colours on Celebrity Instagram yesterday were...')
+
     else:
         print('no twitter password entered, terminating without tweeting')
 
