@@ -1,4 +1,5 @@
 import os
+import sys
 from PIL import Image
 import colourpicker as cp
 from colorthief import ColorThief
@@ -21,7 +22,7 @@ def picture_resizer(directory):
 		w , h = img.size
 		ratio = h / target_height
 		resized_img = img.resize((int(w/ratio),int(h/ratio)))
-		resized_img.save(os.path.join(shrunk_folder,'shrunk',f))
+		resized_img.convert('RGB').save(os.path.join(shrunk_folder,'shrunk',f))
 
 def picture_combi(directory):
 	directory = os.path.abspath(directory)

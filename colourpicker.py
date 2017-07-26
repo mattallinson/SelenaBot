@@ -24,11 +24,11 @@ def palette_printer(palette): #saves a 4x4 grid of the 4 colours from a palette 
 		im.paste(palette[x],grid[x])		
 	return im
 
-def palette_maker(image_to_average): #uses ColorThief to make a Palette of the 4 most dominant colours in the images provided to it, saves them in the palette folder
-	palette_folder = palette_folder_maker()		
+def palette_maker(image_to_average, palette_file_name): #uses ColorThief to make a Palette of the 4 most dominant colours in the images provided to it, saves them in the palette folder
+
 	iColors =ColorThief(image_to_average).get_palette(4) #creates a list of 4 tuples containing the RBG values of the 4 most dominant colours, see ColorThief docs for more info
 	im_pallete = palette_printer(iColors)
-	im_pallete.save(os.path.join(palette_folder,'palette_'+ os.path.basename(image_to_average)))
+	im_pallete.convert('RGB').save(palette_file_name)
 
 def pic_smoosher(images_to_smoosh): # combines multiple images into one big long image, currently only really works if the images provided are the same height & width
 	images = map(Image.open, images_to_smoosh)
@@ -51,20 +51,22 @@ def colourpicker(directory):	# returns a 4x4 palette of the dominant colours of 
 	directory = os.path.abspath(directory)
 	os.chdir(directory)
 	palette_folder = palette_folder_maker()
+	combo_pallette = os.path.join(directory, palette_folder,'combo_pallette.jpg')
+	pallette_of_the_day = os.path.join(directory,'1-pallete-of-day.jpg')
 
 	print('Going through the directory')
 	images = [i for i in os.listdir(directory) if os.path.isfile(os.path.join(directory,i)) and i.endswith(".jpg")]
 	for c,i in enumerate(images,1):
 		print(c, 'of', len(images),'getting dominant colors for',i)
-		palette_maker(i) #makes palletes for all pictures in thie directory	
+		palette_file_name = os.path.join(palette_folder,'palette_'+ os.path.basename(i)) 
+		palette_maker(i , palette_file_name) #makes palletes for all pictures in thie directory	
 	
 	print('Smooshing...')
 	palette_list = [os.path.join(palette_folder,i) for i in os.listdir(palette_folder) if os.path.isfile(os.path.join(palette_folder,i)) and i.endswith(".jpg")]
-	pic_smoosher(palette_list).save(os.path.join(directory, palette_folder,'combo_pallette.jpg')) #smooshes
+	pic_smoosher(palette_list).save(combo_pallette) #smooshes
 	
 	print('Palettes smooshed, finding dominant colour across all palettes')
-	meta_palette_palette=ColorThief(os.path.join(directory, palette_folder,'combo_pallette.jpg')).get_palette(4) #works out most prominant colour
-	palette_printer(meta_palette_palette).save(os.path.join(directory,'1-pallete-of-day.jpg'))
+	palette_maker(combo_pallette, pallette_of_the_day)
 
 
 def main(): #stand-alone version for debugging, directory taken from command line
