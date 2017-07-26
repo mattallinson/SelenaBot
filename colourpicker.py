@@ -28,7 +28,7 @@ def palette_maker(image_to_average): #uses ColorThief to make a Palette of the 4
 	palette_folder = palette_folder_maker()		
 	iColors =ColorThief(image_to_average).get_palette(4) #creates a list of 4 tuples containing the RBG values of the 4 most dominant colours, see ColorThief docs for more info
 	im_pallete = palette_printer(iColors)
-	im_pallete.save(os.path.join(palette_folder,'palette_'+ os.path.basename(image_to_average)))
+	im_pallete.convert('RGB').save(os.path.join(palette_folder,'palette_'+ os.path.basename(image_to_average)))
 
 def pic_smoosher(images_to_smoosh): # combines multiple images into one big long image, currently only really works if the images provided are the same height & width
 	images = map(Image.open, images_to_smoosh)
@@ -64,7 +64,7 @@ def colourpicker(directory):	# returns a 4x4 palette of the dominant colours of 
 	
 	print('Palettes smooshed, finding dominant colour across all palettes')
 	meta_palette_palette=ColorThief(os.path.join(directory, palette_folder,'combo_pallette.jpg')).get_palette(4) #works out most prominant colour
-	palette_printer(meta_palette_palette).save(os.path.join(directory,'1-pallete-of-day.jpg'))
+	palette_printer(meta_palette_palette).convert('RGB').save(os.path.join(directory,'1-pallete-of-day.jpg'))
 
 
 def main(): #stand-alone version for debugging, directory taken from command line
