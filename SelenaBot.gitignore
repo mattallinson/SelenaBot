@@ -98,19 +98,11 @@ ENV/
 # mypy
 .mypy_cache/
 
-#SelenaBot Stuff
-<<<<<<< HEAD
-/SelenaBot_Pictures/
-/SelenaBot_Emoji/
-/SelenaBot_Captions/
-/Archive/
-/test/
+# SelenaBot Stuff
+SelenaBot_Pictures/
+SelenaBot_Emoji/
+SelenaBot_Captions/
+Archive/
+test/
 
 *.jpg
-=======
-/SelenaBot_Pictures
-/SelenaBot_Emoji
-/SelenaBot_Captions
-/Archive
-/test
->>>>>>> 36b6e767d8478c32d5f5c23af043e5ae0b73b443
