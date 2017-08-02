@@ -22,15 +22,18 @@ def picture_resizer(directory):
 		w , h = img.size
 		ratio = h / target_height
 		resized_img = img.resize((int(w/ratio),int(h/ratio)))
-		resized_img.convert('RGB').save(os.path.join(shrunk_folder,'shrunk',f))
+		resized_img.convert('RGB').save(os.path.join(shrunk_folder,'shrunk_' + os.path.basename(f)))
 
 def picture_combi(directory):
 	directory = os.path.abspath(directory)
 	shrunk_folder = shrunk_folder_maker(directory)
 	picture_resizer(directory)
-	cp.pic_smoosher(shrunk_folder).save(os.path.join(directory, shrunk_folder,'combo_picture.jpg'))
-	combi_palette = ColorThief(os.path.join(directory, shrunk_folder,'combo_picture.jpg')).get_palette(4)
-	cp.palette_printer(meta_palette_palette).save(os.path.join(directory,'2-pallete-of-day.jpg'))
+	combo_picture = os.path.join(directory, shrunk_folder,'combo_picture.jpg')
+	
+	shrunk_files = [os.path.join(shrunk_folder,i) for i in os.listdir(shrunk_folder) if os.path.isfile(os.path.join(shrunk_folder,i)) and i.endswith(".jpg")]
+	cp.pic_smoosher(shrunk_files).save(combo_picture)
+	combi_palette = ColorThief(combo_picture).get_palette(4)
+	cp.palette_printer(combi_palette).convert('RGB').save(os.path.join(directory,'2-pallete-of-day.jpg'))
 
 def main(): #stand-alone version for debugging, directory taken from command line
 	filepath = sys.argv[1]

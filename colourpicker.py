@@ -25,11 +25,10 @@ def palette_printer(palette): #saves a 4x4 grid of the 4 colours from a palette 
 	return im
 
 def palette_maker(image_to_average, palette_file_name): #uses ColorThief to make a Palette of the 4 most dominant colours in the images provided to it, saves them in the palette folder
-
 	iColors =ColorThief(image_to_average).get_palette(4) #creates a list of 4 tuples containing the RBG values of the 4 most dominant colours, see ColorThief docs for more info
 	im_pallete = palette_printer(iColors)
 	im_pallete.convert('RGB').save(palette_file_name)
-	im_pallete.convert('RGB').save(os.path.join(palette_folder,'palette_'+ os.path.basename(image_to_average)))
+	#im_pallete.convert('RGB').save(palette_file_name)
 
 def pic_smoosher(images_to_smoosh): # combines multiple images into one big long image, currently only really works if the images provided are the same height & width
 	images = map(Image.open, images_to_smoosh)
@@ -58,8 +57,9 @@ def colourpicker(directory):	# returns a 4x4 palette of the dominant colours of 
 	print('Going through the directory')
 	images = [i for i in os.listdir(directory) if os.path.isfile(os.path.join(directory,i)) and i.endswith(".jpg")]
 	for c,i in enumerate(images,1):
-		print(c, 'of', len(images),'getting dominant colors for',i)
 		palette_file_name = os.path.join(palette_folder,'palette_'+ os.path.basename(i)) 
+
+		print(c, 'of', len(images),'getting dominant colors for',i)		
 		palette_maker(i , palette_file_name) #makes palletes for all pictures in thie directory	
 	
 	print('Smooshing...')
