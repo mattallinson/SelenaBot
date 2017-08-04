@@ -1,11 +1,16 @@
-#! /env/bin/python3
+#! /.env/bin/python3
 
 '''
 BeautifulSoup Instagram Scraper that gets all pictures posted by celebrities yesterday (max 12 pictures per celeb)
 '''
 
-import requests, json, os, pprint, sys, tweepy
-import colourpicker
+import requests
+import json
+import os
+import pprint
+import sys
+import tweepy
+import milpy
 from collections import Counter
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
@@ -107,7 +112,7 @@ def main():
         print(c,'Pictures from today on '+account+'\'s Instagram')
         picDownloader(account)
     print('finding dominant colour')
-    colourpicker.colourpicker(pictureFolder)
+    milpy.directory_image_average(pictureFolder, '.jpg')
 
     if len(sys.argv[1]) > 2:
         api = make_twitter_api('InstaTopEmoji') #updates InstaTopEmoji twitterbot
@@ -115,7 +120,7 @@ def main():
             api.update_status('The most popular emoji on Celebrity Instagram yesterday was: '+ i +' which was used ' +str(j)+' times')
 
         api = make_twitter_api('instaverage') #updates instaverage twitterbot
-        tweetpic = os.path.join(pictureFolder,'1-pallete-of-day.jpg')
+        tweetpic = os.path.join(pictureFolder,'1_average_colors.jpg')
         api.update_with_media(tweetpic, status='the dominant colours on Celebrity Instagram yesterday were...')
 
     else:
