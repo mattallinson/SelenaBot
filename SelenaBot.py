@@ -14,7 +14,7 @@ import milpy
 from collections import Counter
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-from top100gram import top100
+from top100 import top100
 from emoji import emoji
 
 #Configuration
